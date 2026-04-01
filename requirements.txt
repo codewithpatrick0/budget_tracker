@@ -1,0 +1,4 @@
+pandas          # Para el análisis de datos y cálculos
+matplotlib      # Para generar las gráficas (barras, pastel, etc.)
+fpdf2           # Para crear los reportes en PDF de forma sencilla
+sqlalchemy      # Opcional, pero facilita mucho la conexión a SQLite con Pandas
