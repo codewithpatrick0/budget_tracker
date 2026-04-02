@@ -11,6 +11,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 #RUTA A LA BASE DE DATOS
 DB_PATH = BASE_DIR/"data"/"budget.db"
 
+#Creacion de carpeta
+DB_PATH.parent.mkdir(parents=True, exist_ok=True)
+
 #MOTOR DE CONEXION
 engine = create_engine(f"sqlite:///{DB_PATH}")
 
