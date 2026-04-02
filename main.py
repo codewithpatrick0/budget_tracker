@@ -18,54 +18,100 @@ Fecha: 2026-04-02
 """
 
 from src.db import crear_tablas
-from src.gestor import agregar_gasto
+from src.gestor import (
+    agregar_gasto,
+    obtener_todos_gastos,
+    obtener_gastos_por_categoria,
+    obtener_gasto_por_id,
+    eliminar_gasto,
+    obtener_resumen_mensual
+)
 
 #Inicializar laa base de datos (crear tablas si aun no hay)
 crear_tablas()
 
-#Comienzo del menú
-while True :
-    print("\nBIENVENIDO A BUDGET TRACKER\n")
-    print("1.Agregar gasto")
+#FUNCIONES PARA EL MAIN
+def mostrar_menu() :
+
+    #MENU PRINCIPAL
+    print("\n" +"=" * 50)
+    print("BIENVENIDO A BUDGET TRACKER 💰")
+    print("=" * 50)
+    print("\n Opciones Disponibles : \n")
+    print("   1. ➕ Agregar un nuevo gasto")
+    print("   2. 📋 Ver todos los gastos")
+    print("   3. 🏷️  Ver gastos por categoría")
+    print("   4. 🗑️  Eliminar un gasto")
+    print("   5. 📊 Ver resumen mensual")
+    print("   6. ❌ Salir del programa")
+    print("\n" + "="*50)
+
+def seleccionar_opcion():
+    while True:
+        try:
+            # Pedimos el dato
+            opcion = int(input("Selecciona una opción (1-6): "))
+            
+            # Validamos el rango
+            if 1 <= opcion <= 6:
+                return opcion
+            else:
+                print("Error: Opción inválida. Debe estar entre 1 y 6.")
+                
+        except ValueError:
+            print("Error: Debes ingresar un número entero.")
+
+def validar_monto() :
+    while True :
+        try :
+            monto = float(input("Ingresa el monto : "))
+            if monto < 1 :
+                print("El monto debe ser mayor a 0")
+                continue
+            return monto
+        except ValueError :
+            print("El monto debe ser un número entero o decimal")
+
+def validar_categoria() :
+    while True :   
+        categoria = str(input("Escribe la categoría : ")).strip()
+
+        if not categoria :
+            print("La categoría no puede estar vacía")
+            continue
+        if any(char.isdigit() for char in categoria) :
+            print("La categoría no puede contener números")
+            continue
+        
+        return categoria
+            
+def validar_descripcion() :
+    while True :    
+        descripcion = str(input("Ingresa la descripción (Opcional) : ")).strip()
+
+        if len(descripcion) >= 60 :
+            print("Esta descripción sobrepasa el límite de carácteres (60)")
+            continue
+
+        if not descripcion :
+            descripcion = "Sin descripción"
+        
+        return descripcion
+    
+def agregar_gasto_menu() :
+    print("\n--- AGREGAR NUEVO GASTO ---")
     try :
-        opcion = int(input("Selecciona una opción :"))
-    except ValueError :
-        print(f"Error : Debes ingresar un número")
-        continue
-    
-    if opcion <= 0 or opcion > 5 :
-        print("Opción inválida. Fuera de rango de opciones")
-        continue
-    
-    if opcion == 1 :
-        #Validar monto
-        while True :
-            try :
-                monto = float(input("Ingresa el monto : "))
-                if monto <= 1 :
-                    print("El monto necesita ser mayor a 0")
-                    continue
-                break
-            except ValueError :
-                print("Monto ingresado inválido, necesita ser entero o decimal")
-
-        #Validar categoría
-        while True :
-            categoria = input("Categoría : ").strip()
-            if not categoria :
-                print("Este campo no puede estar vacío")
-                continue
-            if any(char.isdigit() for char in categoria) :
-                print("La categoría no puede contener números")
-            else : break
-
-        #Validar descrpción
-        while True :
-            descripcion = input("Descripción : ").strip()
-            if len(descripcion) > 60 :
-                print("El máximo de caracteres es de 60, sobrepasaste el límite")
-                continue
-            if not descripcion :
-                descripcion = "Sin descripción"
-            break
+    # Obtener y validar monto
+        monto = validar_monto()
+        
+        # Obtener y validar categoría
+        categoria = validar_categoria()
+        
+        # Obtener y validar descripción
+        descripcion = validar_descripcion()
+        
+        # Guardar en base de datos
         agregar_gasto(monto, categoria, descripcion)
+        
+    except Exception as e:
+        print(f"❌ Error al agregar gasto: {str(e)}")

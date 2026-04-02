@@ -2,7 +2,7 @@
 MÓDULO GESTOR - Operaciones de Gastos
 =====================================
 
-Contiene todas las funciones para interactuar con los gastos en la BD.
+Contiene todas las funciones p)ara interactuar con los gastos en la BD.
 Incluye operaciones CRUD (Create, Read, Update, Delete).
 
 Funciones principales:
@@ -54,7 +54,7 @@ def agregar_gasto(monto, categoria, descripcion=None):
         #SI o SI terminamos de cerrar la sesión
         session.close()
         
-def obtener_gastos() :
+def obtener_todos_gastos() :
     """Obtiene todos los gastos registrados en la base de datos"""
     
     session = SessionLocal() # Creamos sesion de consulta
@@ -75,7 +75,7 @@ def obtener_gastos_por_categoria(categoria) :
     
     session = SessionLocal()
     try :
-        gastos = session.query(Gasto).filter(Gasto.categoria.ilike(f"%{categoria}%)")).order_by(Gasto.fecha.desc()).all()
+        gastos = session.query(Gasto).filter(Gasto.categoria.ilike(f"%{categoria}%")).order_by(Gasto.fecha.desc()).all()
         return gastos
     
     except Exception as e :
@@ -85,7 +85,7 @@ def obtener_gastos_por_categoria(categoria) :
         session.close()
         
 def obtener_gasto_por_id(id) :
-    """Obtener el gastor por ID ingresado según base de datos"""
+    """Obtener el gasto por ID ingresado según base de datos"""
     
     session = SessionLocal()
     try :
