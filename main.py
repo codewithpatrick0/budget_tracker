@@ -1,6 +1,26 @@
+"""
+BUDGET TRACKER - Sistema de Gestión de Gastos y Ahorros
+========================================================
+
+Este módulo contiene la interfaz principal (menú) de la aplicación.
+Permite a los usuarios interactuar con el sistema de gastos mediante
+un menú de terminal interactivo.
+
+Funcionalidades:
+    - Agregar nuevos gastos con validación
+    - Ver gastos registrados
+    - Filtrar por categoría
+    - Eliminar gastos
+    - Salir de la aplicación
+
+Autor: Patrick
+Fecha: 2026-04-02
+"""
+
 from src.db import crear_tablas
 from src.gestor import agregar_gasto
 
+#Inicializar laa base de datos (crear tablas si aun no hay)
 crear_tablas()
 
 #Comienzo del menú
