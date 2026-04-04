@@ -18,7 +18,7 @@ Fecha: 2026-04-02
 """
 
 from src.db import crear_tablas
-from src.gestor import (
+from src.gestor_gastos import (
     agregar_gasto,
     obtener_todos_gastos,
     obtener_gastos_por_categoria,
@@ -137,7 +137,7 @@ def obtener_todos_gastos_menu() :
             else "Sin descripción"
         )   
         print(f"{gasto.id:<5} S/{gasto.monto:<9.2f} {gasto.categoria:<15} {fecha_fmt:<20} {descripcion_corta:<30}")
-        print(f"\n📊 Total de gastos: {len(gastos)}")
+    print(f"\n📊 Total de gastos: {len(gastos)}")
         
 def ver_gastos_por_categoria() :
     print("\n--- VER GASTOS POR CATEGORÍA ---")
@@ -206,3 +206,70 @@ def eliminar_gasto_menu() :
     except ValueError :
         print("Debes ingresar un ID válido (ENTERO)")
         
+def mostrar_resumen() :
+    print("\n--- RESUMEN MENSUAL ---")
+    
+    resumen = obtener_resumen_mensual()
+    if resumen is None :
+        print("Error al obtener el resumen")
+        return
+    
+    #Validar si hay gastos
+    if resumen['cantidad'] == 0 :
+        print("No hay gastos registrados en el mes")
+        return
+    
+    #Mostrar resumen general
+    print(f"="*40)
+    print(F"{'RESUMEN DEL MES':<40}")
+    print(f"="*40)
+    print(f"{'💰 Total':<20} S/{resumen['total']:<15.2f}")
+    print(f"{'📊 Cantidad de gastos':<20} {resumen['cantidad']:<15}")
+    print(f"{'📈 Promedio por gasto':<20} S/{resumen['promedio']:<15.2f}")
+    print(f"{'='*40}")
+    
+    #Por categoria
+    for categoria, total in sorted(resumen['por_categoria'].items(), key=lambda x: x[1], reverse=True) :
+        porcentaje = (total / resumen['total']) * 100
+        print(f"{categoria:<20} S/{total:<10.2f} ({porcentaje:.1f}%)")
+        
+        print(f"{'-'*40}")
+        
+# ============= PROGRAMA PRINCIPAL =============
+
+if __name__ == "__main__":
+    
+    # Inicializar la base de datos (crear tablas si aún no existen)
+    print("Inicializando Budget Tracker...")
+    crear_tablas()
+    print("✅ Base de datos lista\n")
+    
+    # Menú principal
+    while True:
+        mostrar_menu()
+        
+        # Obtener opción del usuario
+        opcion = seleccionar_opcion()
+        
+        # Ejecutar acción según opción seleccionada
+        if opcion == 1:
+            agregar_gasto_menu()
+        
+        elif opcion == 2:
+            obtener_todos_gastos_menu()
+        
+        elif opcion == 3:
+            ver_gastos_por_categoria()
+        
+        elif opcion == 4:
+            eliminar_gasto_menu()
+        
+        elif opcion == 5:
+            mostrar_resumen()
+        
+        elif opcion == 6:
+            print("\n" + "="*50)
+            print("   👋 ¡Hasta luego, Patrick!")
+            print("   Gracias por usar Budget Tracker 💰")
+            print("="*50 + "\n")
+            break

@@ -75,7 +75,7 @@ def obtener_gastos_por_categoria(categoria) :
     
     session = SessionLocal()
     try :
-        gastos = session.query(Gasto).filter(Gasto.categoria.ilike(f"%{categoria}%)")).order_by(Gasto.fecha.desc()).all()
+        gastos = session.query(Gasto).filter(Gasto.categoria.ilike(f"%{categoria}%")).order_by(Gasto.fecha.desc()).all()
         return gastos
     
     except Exception as e :

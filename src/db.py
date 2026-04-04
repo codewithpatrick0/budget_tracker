@@ -57,10 +57,42 @@ class Gasto(Base) :
     def __repr__(self):
         """Representación legible del objeto Gasto"""
         return (
-            f"Gasto(id={self.id}, monto=S/{self.self.monto},"
-            f"Categoría='{self.categoria}', fecha={self.fecha.strftime('%Y-%m-%d %H:%M')})"
+            f"Gasto(id={self.id},"
+            f"monto=S/{self.monto}, Categoría='{self.categoria}')"
         )
-            
+
+class Ingreso(Base) :
+    __tablename__ = "ingresos" #NOMBRE DE LA TABLA BD
+    
+    #COLUMNAS CON LOS ATRIBUTOS
+    id = Column(Integer, primary_key=True, autoincrement=True, doc="Identificador único del ingreso")
+    monto = Column(Float, nullable=False, doc="Monto del ingreso en dinero")
+    fecha = Column(DateTime, default=datetime.now, doc="Fecha y hora del ingreso")
+    fuente = Column(String, nullable=False, doc="Fuente del ingreso")
+    descripcion = Column(String, nullable=True, doc="Descripción adicional del ingreso")
+    
+    def __repr__(self) :
+        """Representacion legible del obtejo Ingreso"""
+        return(
+            f"Ingreso(id={self.id},"
+            f"monto=S/{self.monto},Fuente={self.fuente})"
+        )
+        
+class Ahorro(Base) :
+    __tablename__ = "ahorros" #TABLA 
+    
+    #COLUMNAS | ATRIBUTOS
+    id = Column(Integer, primary_key=True, autoincrement=True, doc="Identificador único del ahorro")
+    monto = Column(Float, nullable=False, doc="Monto del ahorro en dinero")
+    fecha = Column(DateTime, default=datetime.now(), doc="Fecha y hora del ahorro")
+    meta = Column(String, nullable=False)
+    descripcion = Column(String, nullable=True)
+    
+    def __repr__(self) :
+        return(
+            f"Ahorro(id={self.id}, monto=S/{self.monto},"
+            f"meta={self.meta}"
+        )
 #FUNCIONES DE BASE DE DATOS
 def crear_tablas() :
     """
