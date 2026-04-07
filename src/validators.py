@@ -38,7 +38,30 @@ def validar_nombre(prompt="Ingresa el nombre: ", permitir_numeros=False) :
 
         return valor
     
+def validar_descripcion(max_caracteres=60) :
 
-    
-            
-        
+    while True :
+        descripcion = input(f"Ingresa la descripción (OPCIONAL) : ")
+
+        if len(descripcion) > max_caracteres :
+            print("Su descripción sobrepasa el límite de carácteres (60)")
+            continue
+
+        if not descripcion :
+            descripcion = "Sin descripción"
+        return descripcion
+
+def obtener_opcion(min_opcion=1, max_opcion=6, prompt="Seleccione una opcion") :
+
+    while True :
+        try :
+            opcion = int(input(prompt))
+            if opcion >= min_opcion or opcion <= max_opcion :
+               return opcion
+            else :
+                 print(f"Opción fuera de rango, la opción debe estar entre {min_opcion} y {max_opcion}")
+                 
+        except ValueError :
+            print("Error : Solo números por favor")
+
+
