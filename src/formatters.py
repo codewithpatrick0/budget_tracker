@@ -36,5 +36,35 @@ def mostrar_tabla_gastos(gastos) :
         
         print(f"{gasto.id:<5} {gasto.fecha_fmt:<20} S/{gasto.monto:<10.2f} {gasto.categoria:<15} {descripcion}")
         
-        print(f"Cantidad de gastos : {len(gastos)}")
+        print(f"Cantidad de gastos : {len(gastos)} gasto(s)")
         
+def mostrar_tabla_ingresos(ingresos) :
+    if not ingresos :
+        print("No hay ingresos registrados")
+        return
+    
+    print(f"\n{'ID':<5} {'Fecha' :<20} {'Monto:<10'}{'Fuente':<15}  {'Descripción':<30}")
+    
+    #Content
+    for ingreso in ingresos :
+        fecha_fmt = ingreso.fecha.strftime("%d/%m/%Y %H/%M")
+        descripcion = ingreso.descripcion[:27] + "..." if ingreso.descripcion and ingreso.descripcion > 30 else ingreso.descripcion or "Sin descripcion" 
+        print(f"{ingreso.id:<5} {ingreso.fecha_fmt:<20} S/{ingreso.monto:<10.2f} {ingreso.fuente:<15} {descripcion}")
+        
+        print(f"Cantidad de ingresos : {len(ingresos)} ingreso(s)")
+        
+def mostrar_tabla_ahorros(ahorros) :
+    if not ahorros :
+        print("No hay ingresos registrados")
+        return
+    
+    print(f"\n{'ID':<5} {'Fecha' :<20} {'Monto:<10'} {'Meta':<15}  {'Descripción':<30}")
+    
+    #Content
+    for ahorro in ahorros :
+        for ahorro in ahorros :
+            fecha_fmt = ahorro.fecha.strftime("%d/%m/%Y %H/%M")
+            descripcion = ahorro.descripcion[:27] + "..." if ahorro.descripcion and ahorro.descripcion > 30 else ahorro.descripcion or "Sin descripcion" 
+            print(f"{ahorro.id:<5} {ahorro.fecha_fmt:<20} S/{ahorro.monto:<10.2f} {ahorro.fuente:<15} {descripcion}")
+        
+        print(f"Cantidad de ahorros : {len(ahorros)} ahorro(s)")     
