@@ -67,4 +67,21 @@ def mostrar_tabla_ahorros(ahorros) :
             descripcion = ahorro.descripcion[:27] + "..." if ahorro.descripcion and ahorro.descripcion > 30 else ahorro.descripcion or "Sin descripcion" 
             print(f"{ahorro.id:<5} {ahorro.fecha_fmt:<20} S/{ahorro.monto:<10.2f} {ahorro.fuente:<15} {descripcion}")
         
-        print(f"Cantidad de ahorros : {len(ahorros)} ahorro(s)")     
+        print(f"Cantidad de ahorros : {len(ahorros)} ahorro(s)")
+        
+def mostrar_resumen_financiero(ingresos_total, gastos_total, ahorros_total) :
+    
+    #Ingresamos balance (Resto)
+    balance = ingresos_total - gastos_total
+    porcentaje_ahorro = (ahorros_total / ingresos_total * 100) if ingresos_total > 0 else 0
+    
+    print(f"💰 Ingresos totales:     S/{ingresos_total:>10.2f}")
+    print(f"🛒 Gastos totales:       S/{gastos_total:>10.2f}")
+    print(f"🏦 Ahorros totales:      S/{ahorros_total:>10.2f}")
+    print("-"*50)
+    print(f"✨ Balance neto:         S/{balance:>10.2f}")
+    print(f"📈 % de ahorro:          {porcentaje_ahorro:>9.1f}%")
+    print("="*50)
+    
+def mostrar_desgloze() :
+    
