@@ -83,5 +83,24 @@ def mostrar_resumen_financiero(ingresos_total, gastos_total, ahorros_total) :
     print(f"📈 % de ahorro:          {porcentaje_ahorro:>9.1f}%")
     print("="*50)
     
-def mostrar_desgloze() :
+def mostrar_desgloze(diccionario, titulo, es_dinero = True) :
     
+    if not diccionario :
+        print("No hay datos para mostrar")
+        return
+    
+    print(f"\n{titulo}")
+    print("-"*40)
+    
+    total = sum(diccionario.values())
+    
+    for clave, valor in sorted(diccionario.items(), key=lambda x : x[1], reverse=True) :
+        if es_dinero :
+            porcentaje = (valor/total) * 100 if total > 0 else 0
+            print(f"{clave:<20} S/{valor:<10} {porcentaje:.1f}%")
+        else :
+            print(f"{clave:<20} {valor}")
+            
+        print("-"*40)
+        if es_dinero :
+            print(f"{'Total'}  S/{total:.2f}")
