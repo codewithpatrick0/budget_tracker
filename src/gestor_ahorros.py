@@ -36,9 +36,9 @@ def agregar_ahorro(monto, meta, descripcion=None) :
         session.add(nuevo_ahorro)
         session.commit()
     
-    except :
+    except Exception as e :
         session.rollback()
-        print("No se pudo añadir el nuevo ahorro")
+        print(f"No se pudo añadir el nuevo ahorro : {str(e)}")
         
     finally :
         session.close()
@@ -48,9 +48,70 @@ def obtener_todos_ahorros() :
     try :
         ahorros = session.query(Ahorro).order_by(Ahorro.fecha.desc()).all()
         return ahorros
-    except  :
+    except Exception as e  :
         session.rollback()
-        print("No se pudo obtener los ahorros")
+        print(f"Error al obtener los ahorros : {str(e)}")
         return None
     finally :
+        session.close()
+        
+def obtener_ahorros_por_meta(meta) :
+    session = SessionLocal()
+    try :
+        ahorros = session.query(Ahorro).filter(
+            Ahorro.meta.ilike(f"%{meta}%")
+            ).order_by(Ahorro.fecha.desc()).all()
+        return ahorros
+    except Exception as e :
+        session.rollback()
+        print(f"Error al obtener el ahorro por meta :  {str(e)}")
+        return None
+    finally :
+        session.close()
+
+def obtener_ahorro_por_id(ahorro_id) :
+    session = SessionLocal()
+    try :
+        ahorro = session.query(Ahorro).filter(Ahorro.id == ahorro_id).first()
+        return ahorro
+    except Exception as e :
+        session.rollback()
+        print(f"Error al obtener el ingreso por id : {str(e)}")
+        return None
+    finally :
+        session.close()
+        
+def eliminar_ahorro(ahorro_id) :
+    session = SessionLocal()
+    try :
+        ahorro = session.query(Ahorro).filter(Ahorro.id == ahorro_id).first()
+        
+        if not ahorro :
+            print(f"No existe un ahorro con el ID {ahorro_id}")
+            return False
+        
+        session.delete(ahorro)
+        session.commit
+        return True
+    
+    except Exception as e :
+        session.rollback()
+        print(f"Error al eliminar el ahorro : {str(e)}")
+        
+    finally :
+        session.close()
+        
+def obtener_total_ahorrado_por_meta(meta) :
+    session = SessionLocal()
+    try :
+        resultado = session.query(
+            func.sum(Ahorro.monto).label("total")
+            ).filter(Ahorro.meta.ilike(f"%{meta}%")).first()
+        
+        total = float(resultado.total or 0)
+        return round(total, 2)
+    except Exception as e:
+        print(f"Error al calcular total : {str(e)}")
+        return 0
+    finally:
         session.close()
