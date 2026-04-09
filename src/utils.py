@@ -16,5 +16,7 @@ Fecha: 2026-04-02
 from datetime import datetime
 from src.gestor_gastos import obtener_todos_gastos
 from src.gestor_ingresos import obtener_todos_ingresos
-"""from src.gestor_ahorros import obtener_todos_ahorros"""
+from src.gestor_ahorros import obtener_todos_ahorros
 
+
+    
