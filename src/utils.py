@@ -18,5 +18,9 @@ from src.gestor_gastos import obtener_todos_gastos
 from src.gestor_ingresos import obtener_todos_ingresos
 from src.gestor_ahorros import obtener_todos_ahorros
 
+def enter_para_continuar(prompt="Presiona ENTER para continuar") :
 
+    input(f"\n{prompt}")
+
+def limpiar_pantalla() :
     
