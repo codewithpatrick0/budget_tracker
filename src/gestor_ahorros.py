@@ -124,31 +124,29 @@ def obtener_resumen_ahorro_por_meta() :
             func.sum(Ahorro.monto).label("total"),
             func.count(Ahorro.id).label("cantidad"),
             Ahorro.meta
-            ).group_by(Ahorro.meta).all()
+        ).group_by(Ahorro.meta).all()
         
         if not resultados :
             return {
-                'total_ahorrado' : 0,
+                'total_ahrorrado' : 0,
                 'cantidad_metas' : 0,
                 'por_meta' : {}
             }
-        
+            
         total = 0
         por_meta = {}
         
         for fila in resultados :
             meta = fila.meta
-            sum_meta = sum(fila.total or 0)
-            
+            sum_meta = float(Ahorro.total or 0)
             por_meta[meta] = round(sum_meta, 2)
             total += sum_meta
             
-            return {
-            'total_ahorrado': round(total, 2),
-            'cantidad_metas': len(resultados),
-            'por_meta': por_meta
+        return {
+            'total_ahrorrado' : total,
+                'cantidad_metas' : len(resultados),
+                'por_meta' : por_meta
         }
-    
     except Exception as e:
         print(f"Error al obtener resumen : {str(e)}")
         return None

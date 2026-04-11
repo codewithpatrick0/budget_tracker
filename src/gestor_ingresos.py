@@ -49,7 +49,7 @@ def agregar_ingreso(monto, fuente, descripcion=None) :
     finally :
         session.close()
         
-def obtener_todos_gastos() :
+def obtener_todos_ingresos() :
     #Sesion de consultas para la bd de ingresos
     session = SessionLocal()
     try :
