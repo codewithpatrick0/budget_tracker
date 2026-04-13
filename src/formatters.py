@@ -83,7 +83,7 @@ def mostrar_resumen_financiero(ingresos_total, gastos_total, ahorros_total) :
     print(f"📈 % de ahorro:          {porcentaje_ahorro:>9.1f}%")
     print("="*50)
     
-def mostrar_desgloze(diccionario, titulo, es_dinero = True) :
+def mostrar_desglose(diccionario, titulo, es_dinero = True) :
     
     if not diccionario :
         print("No hay datos para mostrar")
