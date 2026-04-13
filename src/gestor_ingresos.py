@@ -125,7 +125,7 @@ def obtener_resumen_ingresos(año=None, mes=None) :
             Ingreso.fuente
         ).filter(
             extract('year', Ingreso.fecha) == año,
-            extract('mounth', Ingreso.fecha) == mes
+            extract('month', Ingreso.fecha) == mes
         ).group_by(Ingreso.fuente).all()
         
         if not resultados :

@@ -38,7 +38,7 @@ def pausar(mensaje="Presiona ENTER para continuar") :
 
 def obtener_fecha_actual_formateada(formato="%d/%m/%Y") :
     
-    return datetime.now.strftime(formato)
+    return datetime.now().strftime(formato)
 
 def limpiar_pantalla() :
     

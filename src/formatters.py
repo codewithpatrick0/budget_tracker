@@ -27,7 +27,7 @@ def mostrar_tabla_gastos(gastos) :
         print("No hay gastos registrados")
         return
     #Header
-    print(f"\n{'ID':<5} {'Fecha' :<20} {'Monto:<10'}{'Categoría':<15}  {'Descripción':<30}")
+    print(f"\n{'ID':<5} {'Fecha' :<20} {'Monto:<10'}{'Categoría':<15}{'Descripción':<30}")
     
     #Content
     for gasto in gastos :
@@ -43,7 +43,7 @@ def mostrar_tabla_ingresos(ingresos) :
         print("No hay ingresos registrados")
         return
     
-    print(f"\n{'ID':<5} {'Fecha' :<20} {'Monto:<10'}{'Fuente':<15}  {'Descripción':<30}")
+    print(f"\n{'ID':<5} {'Fecha' :<20} {'Monto:<10'} {'Fuente':<15}  {'Descripción':<30}")
     
     #Content
     for ingreso in ingresos :
