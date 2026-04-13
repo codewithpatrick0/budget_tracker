@@ -68,7 +68,7 @@ from src.gestor_ahorros import (
     obtener_ahorros_por_meta,
     obtener_ahorro_por_id,
     eliminar_ahorro,
-    obtener_resumen_ahorro_por_meta
+    obtener_resumen_ahorros_por_meta
 )
 
 
@@ -115,7 +115,7 @@ def agregar_gasto_menu() :
 def ver_todos_gastos_menu() :
     mostrar_encabezado("VER TODOS LOS GASTOS 📋", 60)
     
-    gastos = obtener_todos_gastos
+    gastos = obtener_todos_gastos()
     mostrar_tabla_gastos(gastos)
     pausar()
     
@@ -495,7 +495,7 @@ def ver_resumen_ahorros_menu():
     """
     mostrar_encabezado("RESUMEN DE AHORROS 📊", 60)
     
-    resumen = obtener_resumen_ahorro_por_meta()
+    resumen = obtener_resumen_ahorros_por_meta()
     
     if resumen is None or resumen['cantidad_metas'] == 0:
         print("ℹ️  No hay ahorros registrados")
@@ -556,20 +556,26 @@ def mostrar_reportes():
     print("DETALLES POR CATEGORÍA".center(60))
     print("="*60)
     
-    # Gastos por categoría
+    # ✅ Gastos por categoría - CON VALIDACIÓN
     resumen_gastos = obtener_resumen_gastos()
-    if resumen_gastos and resumen_gastos['por_categoria']:
-        mostrar_desglose("\n🛒 GASTOS POR CATEGORÍA", resumen_gastos['por_categoria'])
+    if resumen_gastos and resumen_gastos.get('por_categoria'):  # ✅ .get() para evitar KeyError
+        mostrar_desglose("🛒 GASTOS POR CATEGORÍA", resumen_gastos['por_categoria'])
+    else:
+        print("ℹ️  No hay gastos por mostrar")
     
-    # Ingresos por fuente
+    # ✅ Ingresos por fuente - CON VALIDACIÓN
     resumen_ingresos = obtener_resumen_ingresos()
-    if resumen_ingresos and resumen_ingresos['por_fuente']:
-        mostrar_desglose("\n💵 INGRESOS POR FUENTE", resumen_ingresos['por_fuente'])
+    if resumen_ingresos and resumen_ingresos.get('por_fuente'):  # ✅ .get() para evitar KeyError
+        mostrar_desglose("💵 INGRESOS POR FUENTE", resumen_ingresos['por_fuente'])
+    else:
+        print("ℹ️  No hay ingresos por mostrar")
     
-    # Ahorros por meta
-    resumen_ahorros = obtener_resumen_ahorro_por_meta()
-    if resumen_ahorros and resumen_ahorros['por_meta']:
-        mostrar_desglose("\n🏦 AHORROS POR META", resumen_ahorros['por_meta'])
+    # ✅ Ahorros por meta - CON VALIDACIÓN
+    resumen_ahorros = obtener_resumen_ahorros_por_meta()
+    if resumen_ahorros and resumen_ahorros.get('por_meta'):  # ✅ .get() para evitar KeyError
+        mostrar_desglose("🏦 AHORROS POR META", resumen_ahorros['por_meta'])
+    else:
+        print("ℹ️  No hay ahorros por mostrar")
     
     pausar()
 

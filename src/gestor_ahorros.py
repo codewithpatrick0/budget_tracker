@@ -91,7 +91,7 @@ def eliminar_ahorro(ahorro_id) :
             return False
         
         session.delete(ahorro)
-        session.commit
+        session.commit()
         return True
     
     except Exception as e :
@@ -116,7 +116,7 @@ def obtener_total_ahorrado_por_meta(meta) :
     finally:
         session.close()
         
-def obtener_resumen_ahorro_por_meta() :
+def obtener_resumen_ahorros_por_meta() :
     
     session = SessionLocal()
     try :
@@ -128,7 +128,7 @@ def obtener_resumen_ahorro_por_meta() :
         
         if not resultados :
             return {
-                'total_ahrorrado' : 0,
+                'total_ahorrado' : 0,
                 'cantidad_metas' : 0,
                 'por_meta' : {}
             }
@@ -138,12 +138,12 @@ def obtener_resumen_ahorro_por_meta() :
         
         for fila in resultados :
             meta = fila.meta
-            sum_meta = float(Ahorro.total or 0)
+            sum_meta = float(fila.total or 0)
             por_meta[meta] = round(sum_meta, 2)
             total += sum_meta
             
         return {
-            'total_ahrorrado' : total,
+            'total_ahorrado' : total,
                 'cantidad_metas' : len(resultados),
                 'por_meta' : por_meta
         }

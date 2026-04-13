@@ -34,9 +34,9 @@ def mostrar_tabla_gastos(gastos) :
         fecha_fmt = gasto.fecha.strftime("%d/%m/%Y %H/%M")
         descripcion = gasto.descripcion[:27] + "..." if gasto.descripcion and len(gasto.descripcion) > 30 else gasto.descripcion or "Sin descripcion" 
         
-        print(f"{gasto.id:<5} {gasto.fecha_fmt:<20} S/{gasto.monto:<10.2f} {gasto.categoria:<15} {descripcion}")
+        print(f"{gasto.id:<5} {fecha_fmt:<20} S/{gasto.monto:<10.2f} {gasto.categoria:<15} {descripcion}")
         
-        print(f"Cantidad de gastos : {len(gastos)} gasto(s)")
+    print(f"Cantidad de gastos : {len(gastos)} gasto(s)")
         
 def mostrar_tabla_ingresos(ingresos) :
     if not ingresos :
@@ -49,9 +49,9 @@ def mostrar_tabla_ingresos(ingresos) :
     for ingreso in ingresos :
         fecha_fmt = ingreso.fecha.strftime("%d/%m/%Y %H/%M")
         descripcion = ingreso.descripcion[:27] + "..." if ingreso.descripcion and ingreso.descripcion > 30 else ingreso.descripcion or "Sin descripcion" 
-        print(f"{ingreso.id:<5} {ingreso.fecha_fmt:<20} S/{ingreso.monto:<10.2f} {ingreso.fuente:<15} {descripcion}")
+        print(f"{ingreso.id:<5} {fecha_fmt:<20} S/{ingreso.monto:<10.2f} {ingreso.fuente:<15} {descripcion}")
         
-        print(f"Cantidad de ingresos : {len(ingresos)} ingreso(s)")
+    print(f"Cantidad de ingresos : {len(ingresos)} ingreso(s)")
         
 def mostrar_tabla_ahorros(ahorros) :
     if not ahorros :
@@ -65,7 +65,7 @@ def mostrar_tabla_ahorros(ahorros) :
         for ahorro in ahorros :
             fecha_fmt = ahorro.fecha.strftime("%d/%m/%Y %H/%M")
             descripcion = ahorro.descripcion[:27] + "..." if ahorro.descripcion and ahorro.descripcion > 30 else ahorro.descripcion or "Sin descripcion" 
-            print(f"{ahorro.id:<5} {ahorro.fecha_fmt:<20} S/{ahorro.monto:<10.2f} {ahorro.fuente:<15} {descripcion}")
+            print(f"{ahorro.id:<5} {fecha_fmt:<20} S/{ahorro.monto:<10.2f} {ahorro.fuente:<15} {descripcion}")
         
         print(f"Cantidad de ahorros : {len(ahorros)} ahorro(s)")
         
@@ -83,10 +83,23 @@ def mostrar_resumen_financiero(ingresos_total, gastos_total, ahorros_total) :
     print(f"📈 % de ahorro:          {porcentaje_ahorro:>9.1f}%")
     print("="*50)
     
-def mostrar_desglose(diccionario, titulo, es_dinero = True) :
+def mostrar_desglose(titulo, diccionario, es_dinero=True):
+    """
+    Muestra un desglose de datos en formato tabla.
+    """
+    # ✅ VALIDACIÓN IMPORTANTE
+    if not diccionario:
+        print("ℹ️  No hay datos para mostrar")
+        return
     
-    if not diccionario :
-        print("No hay datos para mostrar")
+    # ✅ Si es string, no hacer nada
+    if isinstance(diccionario, str):
+        print(f"ℹ️  Error: {diccionario}")
+        return
+    
+    # ✅ Si no es diccionario, no hacer nada
+    if not isinstance(diccionario, dict):
+        print(f"ℹ️  Formato incorrecto: {type(diccionario)}")
         return
     
     print(f"\n{titulo}")
@@ -94,13 +107,13 @@ def mostrar_desglose(diccionario, titulo, es_dinero = True) :
     
     total = sum(diccionario.values())
     
-    for clave, valor in sorted(diccionario.items(), key=lambda x : x[1], reverse=True) :
-        if es_dinero :
+    for clave, valor in sorted(diccionario.items(), key=lambda x: x[1], reverse=True):
+        if es_dinero:
             porcentaje = (valor/total) * 100 if total > 0 else 0
-            print(f"{clave:<20} S/{valor:<10} {porcentaje:.1f}%")
-        else :
+            print(f"{clave:<20} S/{valor:<10.2f} ({porcentaje:.1f}%)")
+        else:
             print(f"{clave:<20} {valor}")
-            
-        print("-"*40)
-        if es_dinero :
-            print(f"{'Total'}  S/{total:.2f}")
+    
+    print("-"*40)
+    if es_dinero:
+        print(f"{'TOTAL':<20} S/{total:.2f}")

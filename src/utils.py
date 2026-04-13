@@ -20,9 +20,9 @@ from src.gestor_ahorros import obtener_todos_ahorros
 
 def calcular_balance() :
     
-    gastos = obtener_todos_gastos
-    ingresos = obtener_todos_ingresos
-    ahorros = obtener_todos_ahorros
+    gastos = obtener_todos_gastos()
+    ingresos = obtener_todos_ingresos()
+    ahorros = obtener_todos_ahorros()
     
     gastos_totales = sum(g.monto for g in gastos)
     ingresos_totales = sum(i.monto for i in ingresos)

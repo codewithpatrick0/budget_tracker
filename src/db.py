@@ -84,7 +84,7 @@ class Ahorro(Base) :
     #COLUMNAS | ATRIBUTOS
     id = Column(Integer, primary_key=True, autoincrement=True, doc="Identificador único del ahorro")
     monto = Column(Float, nullable=False, doc="Monto del ahorro en dinero")
-    fecha = Column(DateTime, default=datetime.now(), doc="Fecha y hora del ahorro")
+    fecha = Column(DateTime, default=datetime.now, doc="Fecha y hora del ahorro")
     meta = Column(String, nullable=False)
     descripcion = Column(String, nullable=True)
     
