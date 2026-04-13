@@ -1,1 +1,3 @@
 # budget_tracker
+
+13/04/26 "ACABADO" EN PAUSA (VA A ESCALAR)...
